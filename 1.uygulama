@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ÖSYM Uz ile ilişkim yeniden başlamıştır!</title>
+    <style>
+        :root {
+            --bg-pastel: #f0f7f4;
+            --card-bg: #ffffff;
+            --primary-green: #407952;
+            --soft-green: #d8eadf;
+            --accent-gold: #e6af2e;
+            --text-main: #223028;
+            --note-bg: #fffcf4;
+            --border-color: #c4d7cb;
+            --card-shadow: 0 12px 35px rgba(64, 121, 82, 0.12);
+        }
+        [data-theme="dark"] {
+            --bg-pastel: #090f0c;
+            --card-bg: #121a15;
+            --primary-green: #58a170;
+            --soft-green: #1b2920;
+            --accent-gold: #f4d06f;
+            --text-main: #e2ede7;
+            --note-bg: #1f1a14;
+            --border-color: #273b2f;
+            --card-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-pastel);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 15px;
+            color: var(--text-main);
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 980px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border-top: 8px solid var(--primary-green);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        h1 {
+            color: var(--primary-green);
+            margin: 0 0 4px 0;
+            font-size: 22px;
+        }
+        .subtitle {
+            color: #78909c;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .theme-btn {
+            background: var(--soft-green);
+            border: 1px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .target-banner {
+            background: linear-gradient(135deg, var(--soft-green), var(--card-bg));
+            border: 2px solid var(--primary-green);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(64,121,82,0.1);
+        }
+        .hospital-rank-box {
+            background: var(--soft-green);
+            border: 1px solid var(--accent-gold);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .quote-box {
+            background: var(--note-bg);
+            border: 1px dashed var(--accent-gold);
+            padding: 12px 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            font-style: italic;
+            color: #b8860b;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        @media(max-width: 600px) { .countdown-grid { grid-template-columns: 1fr; } }
+        .countdown-box {
+            background: var(--soft-green);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+        .sound-bar {
+            background: var(--soft-green);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .sound-btns { display: flex; gap: 5px; flex-wrap: wrap; }
+        .sound-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--primary-green);
+            color: var(--text-main);
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .sound-btn.active { background: var(--primary-green); color: white; }
+        
+        .top-widgets {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        @media(max-width: 700px) { .top-widgets { grid-template-columns: 1fr; } }
+        .energy-box, .water-box {
+            background: var(--soft-green);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .energy-btns {
+            display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+        }
+        .energy-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--primary-green);
+            color: var(--text-main);
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .energy-btn.active { background: var(--primary-green); color: white; }
+        .water-counter { font-size: 20px; font-weight: bold; color: #0288d1; margin: 5px 0; cursor: pointer; user-select: none; }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+        .tab-btn.active { background: var(--primary-green); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .timers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        @media(max-width: 700px) { .timers-grid { grid-template-columns: 1fr; } }
+        .timer-card {
+            background: var(--soft-green);
+            border: 2px dashed var(--primary-green);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .timer-display {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin: 5px 0 8px 0;
+            font-family: monospace;
+        }
+        .timer-btns button {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 2px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .timer-btns button.reset { background: #c0392b; }
+        
+        .plant-box {
+            background: linear-gradient(135deg, var(--soft-green), var(--card-bg));
+            border: 2px solid var(--primary-green);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(64,121,82,0.1);
+        }
+        .plant-visual { font-size: 44px; margin: 5px 0; }
+        .plant-info { font-size: 13px; font-weight: bold; color: var(--primary-green); }
+        .plant-bio-note { font-size: 12px; margin-top: 6px; font-style: italic; opacity: 0.9; background: var(--note-bg); padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); }
+
+        .anatomy-box {
+            background: var(--soft-green);
+            border: 2px solid var(--accent-gold);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .vaka-box {
+            background: var(--note-bg);
+            border: 2px solid var(--primary-green);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .vaka-title { font-size: 14px; font-weight: bold; color: var(--primary-green); margin-bottom: 6px; }
+        .vaka-desc { font-size: 13px; line-height: 1.5; opacity: 0.9; }
+
+        .routine-box {
+            background: var(--soft-green);
+            border: 2px solid var(--accent-gold);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .routine-box h3 { margin-top: 0; color: var(--accent-gold); font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .routine-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        @media(max-width: 600px) { .routine-grid { grid-template-columns: 1fr; } }
+        .routine-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .total-soru-banner {
+            background: linear-gradient(135deg, var(--primary-green), #274d33);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(64,121,82,0.2);
+        }
+
+        .cork-board {
+            background: #d4a373;
+            border: 8px solid #b08968;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+        .cork-board h3 {
+            margin-top: 0;
+            color: #38220f;
+            text-align: center;
+            font-size: 16px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+        }
+        .sticky-notes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media(max-width: 600px) { .sticky-notes-grid { grid-template-columns: 1fr; } }
+        .sticky-note {
+            background: #faedcd;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.2);
+            position: relative;
+            transform: rotate(-1deg);
+            transition: 0.2s;
+            color: #283618;
+            border-left: 5px solid #d4a373;
+        }
+        .sticky-note:nth-child(even) { transform: rotate(1.5deg); background: #fefae0; }
+        .sticky-note:hover { transform: scale(1.02) rotate(0deg); z-index: 10; }
+        .sticky-pin {
+            width: 12px; height: 12px; background: #e07a5f; border-radius: 50%;
+            position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .sticky-title { font-weight: bold; font-size: 13px; margin-bottom: 6px; color: #bc6c25; }
+        .sticky-content { font-size: 12px; line-height: 1.4; white-space: pre-line; }
+
+        .day-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: var(--soft-green);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-green);
+        }
+        select, input, textarea {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .progress-container {
+            background: var(--border-color);
+            border-radius: 10px;
+            height: 18px;
+            width: 100%;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #6ab081, #407952);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+        .task-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .task-item {
+            background: var(--soft-green);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-left: 5px solid var(--primary-green);
+            border: 1px solid var(--border-color);
+        }
+        .task-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .task-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 180px; }
+        input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary-green); flex-shrink: 0; }
+        .task-text { font-size: 14px; font-weight: 600; }
+        .video-link {
+            display: inline-block; font-size: 11px; color: #c0392b; text-decoration: none;
+            background: #fde8e8; padding: 2px 6px; border-radius: 4px; font-weight: bold;
+        }
+        .task-sub-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-color);
+        }
+        .task-sub-row input[type="number"] { width: 90px; padding: 5px; text-align: center; font-size: 13px; }
+        .task-sub-row textarea { height: 40px; font-size: 12px; resize: vertical; flex: 1; min-width: 200px; padding: 6px; }
+
+        .general-notes {
+            background: var(--note-bg); border-left: 5px solid var(--accent-gold); padding: 12px;
+            border-radius: 10px; margin-top: 15px; border: 1px solid #fae19d;
+        }
+        .general-notes h3 { margin: 0 0 6px 0; color: #b8860b; font-size: 14px; }
+        textarea { height: 70px; resize: vertical; }
+        .save-btn {
+            display: block; width: 100%; background: linear-gradient(135deg, #6ab081, #407952);
+            color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold;
+            border-radius: 10px; cursor: pointer; margin-top: 15px; text-align: center;
+            box-shadow: 0 6px 20px rgba(64,121,82,0.2);
+        }
+        .panel-box {
+            background: var(--soft-green); padding: 15px; border-radius: 12px;
+            margin-bottom: 15px; border: 1px solid var(--border-color);
+        }
+        .panel-box h3 { margin-top: 0; color: var(--primary-green); font-size: 15px; }
+        .net-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px; }
+        @media(max-width: 500px) { .net-grid { grid-template-columns: 1fr; } }
+        .net-input-group { display: flex; flex-direction: column; gap: 3px; font-size: 12px; font-weight: bold; }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        @media(max-width: 700px) { .badges-grid { grid-template-columns: 1fr 1fr; } }
+        @media(max-width: 450px) { .badges-grid { grid-template-columns: 1fr; } }
+        .badge-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            opacity: 0.35;
+            transition: 0.3s;
+        }
+        .badge-card.unlocked {
+            border-color: var(--accent-gold);
+            opacity: 1;
+            background: var(--soft-green);
+            box-shadow: 0 6px 18px rgba(230,175,46,0.25);
+            transform: translateY(-3px);
+        }
+        .badge-icon { font-size: 32px; margin-bottom: 6px; }
+        .badge-title { font-size: 12px; font-weight: bold; color: var(--primary-green); }
+        .badge-desc { font-size: 10px; opacity: 0.85; margin-top: 3px; line-height: 1.3; }
+
+        .bones-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .bone-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 12px;
+            text-align: left;
+        }
+        .bone-card.unlocked {
+            border-color: var(--primary-green);
+            background: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(64,121,82,0.15);
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 10px;
+        }
+        .quiz-question {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: var(--primary-green);
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .quiz-opt-btn {
+            background: var(--soft-green);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: 0.2s;
+        }
+        .quiz-opt-btn:hover { background: var(--border-color); }
+        .quiz-opt-btn.correct { background: #27ae60 !important; color: white; border-color: #27ae60; }
+        .quiz-opt-btn.wrong { background: #c0392b !important; color: white; border-color: #c0392b; }
+        .quiz-feedback {
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            background: var(--note-bg);
+            display: none;
+        }
+
+        .wheel-box {
+            text-align: center;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-gold);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        .wheel-result {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-top: 15px;
+            min-height: 50px;
+            padding: 10px;
+            background: var(--soft-green);
+            border-radius: 8px;
+            border: 1px dashed var(--accent-gold);
+        }
+
+        .flashcard-box {
+            background: var(--card-bg);
+            border: 2px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(64,121,82,0.1);
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        .flashcard-box:hover { transform: scale(1.01); }
+        .flashcard-content { font-size: 16px; font-weight: bold; color: var(--primary-green); }
+        .flashcard-sub { font-size: 11px; opacity: 0.7; margin-top: 10px; }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>🩺 ÖSYM Uz ile ilişkim yeniden başlamıştır!</h1>
+            <div class="subtitle">Çapa Tıp Koçluk, Anatomi, Mantar Pano & Soru Takip Paneli</div>
+        </div>
+        <button class="theme-btn" onclick="toggleTheme()">🌙 Gece Nöbeti (Tema)</button>
+    </div>
+
+    <div class="target-banner">
+        ✨ Hedef: Çapa Tıp Fakültesi | ÖSYM Uz ile ilişkim yeniden başladı! ✨
+    </div>
+
+    <div class="hospital-rank-box">
+        <span>🏥 Hastane Kariyer Unvanı:</span>
+        <span id="hospitalRankTitle" style="color:var(--text-main); background:var(--card-bg); padding:4px 10px; border-radius:6px;">Stajyer Doktor</span>
+    </div>
+
+    <!-- HER GÜN FARKLI ATATÜRK SÖZÜ -->
+    <div class="quote-box" id="dailyQuote">
+        Yükleniyor...
+    </div>
+
+    <!-- MANTAR PANO BÖLÜMÜ -->
+    <div class="cork-board">
+        <h3>📌 İzlerim (Kaynak & Rutin Hatırlatıcıları)</h3>
+        <div class="sticky-notes-grid">
+            <div class="sticky-note">
+                <div class="sticky-pin"></div>
+                <div class="sticky-title">📖 Türkçe & Paragraf</div>
+                <div class="sticky-content">Her gün zihin açmak için Gün aşırı sırasıyla **Süre Yayınları** ve **Apotemi** Paragraf Soru Bankasından 25 soru çözülecek.</div>
+            </div>
+            <div class="sticky-note">
+                <div class="sticky-pin"></div>
+                <div class="sticky-title">🧮 Matematik & Problemler</div>
+                <div class="sticky-content">Gün aşırı sırasıyla **Apotemi** ve **Barış Yayınları** Problemler fasikülü (20 soru). PKOB için **Barış** fasikülü.</div>
+            </div>
+            <div class="sticky-note">
+                <div class="sticky-pin"></div>
+                <div class="sticky-title">⚛️ Fizik & Kimya</div>
+                <div class="sticky-content">TYT Fizik: **345 & 3D** | AYT Fizik: **Bilgi Sarmal, 3D, MSB, Ulti, Egzersiz**.
+                AYT Kimya: **Orbital, Aydın, 3D** + **Görkem Şahin / Orbital** Organik Fasikülleri.</div>
+            </div>
+            <div class="sticky-note">
+                <div class="sticky-pin"></div>
+                <div class="sticky-title">🧬 Biyoloji & Geometri</div>
+                <div class="sticky-content">AYT Biyoloji: **Biyotik, 345, Palme, 3D**. Geometri sırası: **1. 3D TYT Geo, 2. Tyt Orijinal Geo, 3. 3D AYT Geo, 4. Eyüp B. Geo** (5 Test).</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="countdown-grid">
+        <div class="countdown-box" id="tytCountdown">⏳ TYT Sınavına Kalan: Yükleniyor...</div>
+        <div class="countdown-box" id="aytCountdown">⏳ AYT Sınavına Kalan: Yükleniyor...</div>
+    </div>
+
+    <div class="sound-bar">
+        <span>🎧 Odak Sesleri:</span>
+        <div class="sound-btns">
+            <button class="sound-btn" onclick="toggleSound('rain')" id="btn-rain">🌧️ Yağmur</button>
+            <button class="sound-btn" onclick="toggleSound('cafe')" id="btn-cafe">☕ Kafe</button>
+            <button class="sound-btn" onclick="toggleSound('lofi')" id="btn-lofi">🎶 Lofi</button>
+        </div>
+    </div>
+
+    <div class="top-widgets">
+        <div class="energy-box">
+            <div style="font-size: 12px; font-weight: bold;" id="energyTitle">⚡ Bugün Enerjin Ne Durumda?</div>
+            <div class="energy-btns">
+                <button class="energy-btn" onclick="setEnergy('roket')">🚀 Roket Gibiyim</button>
+                <button class="energy-btn" onclick="setEnergy('yorgun')">☕ Yorgunum</button>
+                <button class="energy-btn" onclick="setEnergy('dinlenme')">🌧️ Dinlenme</button>
+            </div>
+            <div id="energyMessage" style="font-size: 11px; margin-top: 4px; font-style: italic; opacity: 0.85;"></div>
+        </div>
+        <div class="water-box">
+            <div style="font-size: 12px; font-weight: bold;">💧 Su Takibi (Günlük Hedef: 2.5L)</div>
+            <div class="water-counter" onclick="addWater()" ondblclick="resetDailyWater()" title="Su içmek için tıkla! Sıfırlamak için çift tıkla">+ <span id="waterCount">0.0</span> L</div>
+            <div style="font-size: 10px; opacity: 0.7;">Tıkla: +0.25L | Çift tıkla: Sıfırla</div>
+        </div>
+    </div>
+
+    <!-- Sekmeler -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('kamp')">🌿 Günlük Kamp</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">🧠 Akıllı Günlük Viz</button>
+        <button class="tab-btn" onclick="switchTab('flashcards')">📇 Hızlı Kartlar</button>
+        <button class="tab-btn" onclick="switchTab('netler')">📊 Deneme & Netler</button>
+        <button class="tab-btn" onclick="switchTab('kantin')">☕ Kantin Çarkı</button>
+        <button class="tab-btn" onclick="switchTab('anatomi')">🦴 Anatomi Arşivi</button>
+        <button class="tab-btn" onclick="switchTab('istatistik')">📈 İstatistikler</button>
+        <button class="tab-btn" onclick="switchTab('rozetler')">🏆 Rozetler</button>
+        <button class="tab-btn" onclick="switchTab('yanlislar')">⚠️ Yanlış Defteri</button>
+    </div>
+
+    <!-- SEKME 1: GÜNLÜK KAMP -->
+    <div id="tab-kamp" class="tab-content active">
+        <div class="vaka-box">
+            <div class="vaka-title" id="vakaTitle">🧬 Günün Klinik Vaka Köşesi (Yükleniyor...)</div>
+            <div class="vaka-desc" id="vakaDesc">Yükleniyor...</div>
+        </div>
+
+        <div class="timers-grid">
+            <div class="timer-card">
+                <div style="font-size: 11px; font-weight: bold;">⏱️ KRONOMETRE (7 Saat Hedefi)</div>
+                <div class="timer-display" id="timerDisplay">00:00:00</div>
+                <div class="timer-btns">
+                    <button onclick="startTimer()">Başlat</button>
+                    <button onclick="pauseTimer()" style="background:#d97706;">Durdur</button>
+                    <button class="reset" onclick="resetTimer()">Sıfırla</button>
+                </div>
+                <div style="font-size: 10px; margin-top: 5px; font-weight: bold; color:var(--primary-green);" id="timerStatusMsg">Günlük Çalışma: 0 dk</div>
+            </div>
+            <div class="timer-card">
+                <div style="font-size: 11px; font-weight: bold;" id="pomoStatusText">🍅 1 SAAT ODAKLANMA</div>
+                <div class="timer-display" id="pomoDisplay">60:00</div>
+                <div class="timer-btns">
+                    <button onclick="startPomo()">Başlat</button>
+                    <button onclick="pausePomo()" style="background:#d97706;">Durdur</button>
+                    <button class="reset" onclick="resetPomo()">Sıfırla</button>
+                </div>
+                <div style="font-size: 11px; margin-top: 6px; font-weight: bold;" id="pomoSeries">Tamamlanan Seriler: 🍅 (0)</div>
+            </div>
+        </div>
+
+        <div class="plant-box">
+            <div style="font-size: 12px; font-weight: bold;">🌱 Odaklanma Bitki Bahçesi & Mini Biyoloji Notu</div>
+            <div class="plant-visual" id="plantVisual">🌱</div>
+            <div class="plant-info" id="plantInfo">Henüz odaklanma bitkisi ekilmedi. 1 saatlik seansı bitir, bahçen yeşersin!</div>
+            <div class="plant-bio-note" id="plantBioNote">💡 İpucu: Her 1 saatlik odaklanmada bitki büyür ve YKS Biyoloji için kritik bir detay öğrenirsin.</div>
+        </div>
+
+        <div class="anatomy-box" id="boneRewardBox" style="display:none;">
+            <div style="font-size: 13px; font-weight: bold; color: var(--accent-gold);">🎉 7 SAAT BARAJINI AŞTIN!</div>
+            <div style="font-size: 12px; margin-top: 4px;" id="unlockedBoneText">Bugünkü çabanla iskelet sistemine yeni bir kemik eklendi! "Anatomi Arşivi" sekmesinden inceleyebilirsin.</div>
+        </div>
+
+        <div class="day-selector">
+            <label for="daySelect"><b>Bugün Hangi Gündesin? (Gün Seç):</b></label>
+            <select id="daySelect" onchange="onDayChange()">
+                <!-- 84 Gün JavaScript ile yüklenecek -->
+            </select>
+        </div>
+
+        <!-- GÜNLÜK RUTİNLER AYRI BÖLÜMÜ -->
+        <div class="routine-box">
+            <h3><span>⚡ Günlük Rutinler Takibi</span> <span id="routineCountBadge" style="font-size: 12px;">0 / 4 Tamam</span></h3>
+            <div class="routine-grid">
+                <div class="routine-item">
+                    <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><input type="checkbox" id="rutin_paragraf" onchange="updateRoutineProgress()"> <span id="labelParagrafKitap">📖 Paragraf (Süre / Apotemi)</span></label>
+                    <input type="number" id="rutin_paragraf_soru" placeholder="Soru Sayısı" style="width: 100px;" oninput="calculateTotalSoru()">
+                </div>
+                <div class="routine-item">
+                    <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><input type="checkbox" id="rutin_problem" onchange="updateRoutineProgress()"> <span id="labelProblemKitap">🧮 Problemler (Apotemi / Barış)</span></label>
+                    <input type="number" id="rutin_problem_soru" placeholder="Soru Sayısı" style="width: 100px;" oninput="calculateTotalSoru()">
+                </div>
+                <div class="routine-item">
+                    <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><input type="checkbox" id="rutin_pkob" onchange="updateRoutineProgress()"> 📊 PKOB (Barış Fasikülü)</label>
+                    <input type="number" id="rutin_pkob_soru" placeholder="Soru Sayısı" style="width: 100px;" oninput="calculateTotalSoru()">
+                </div>
+                <div class="routine-item">
+                    <label style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><input type="checkbox" id="rutin_geometri" onchange="updateRoutineProgress()"> <span id="labelGeoKitap">📐 Geometri (3D/Orijinal/Eyüp B.)</span></label>
+                    <input type="number" id="rutin_geometri_soru" placeholder="Soru Sayısı" style="width: 100px;" oninput="calculateTotalSoru()">
+                </div>
+            </div>
+        </div>
+
+        <!-- TOPLAM SORU SAYACI BANNERI -->
+        <div class="total-soru-banner">
+            🎯 Bugün Çözülen Toplam Soru: <span id="toplamGunlukSoru">0</span> Soru
+        </div>
+
+        <div class="micro-goals-box" style="background:var(--soft-green); padding:12px; border-radius:12px; margin-bottom:15px; border:1px solid var(--border-color);">
+            <h3 style="margin-top:0; font-size:14px; color:var(--primary-green);">🎯 Bugünün 3 Kritik Odak Hedefi</h3>
+            <div class="micro-item" style="display:flex; gap:8px; margin-bottom:6px;"><input type="checkbox" id="micro_0" onchange="saveMicroGoals()"><input type="text" id="micro_text_0" placeholder="1. Kritik Hedef" oninput="saveMicroGoals()"></div>
+            <div class="micro-item" style="display:flex; gap:8px; margin-bottom:6px;"><input type="checkbox" id="micro_1" onchange="saveMicroGoals()"><input type="text" id="micro_text_1" placeholder="2. Kritik Hedef" oninput="saveMicroGoals()"></div>
+            <div class="micro-item" style="display:flex; gap:8px;"><input type="checkbox" id="micro_2" onchange="saveMicroGoals()"><input type="text" id="micro_text_2" placeholder="3. Kritik Hedef" oninput="saveMicroGoals()"></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-info">
+            <span id="gardenStatus">Bahçe Durumu: Tohumlar Ekilmedi 🌱</span>
+            <span id="progressText">Tamamlanan Ders: %0</span>
+        </div>
+
+        <ul class="task-list" id="taskList"></ul>
+
+        <div class="general-notes">
+            <h3>🌼 Selen'in Günlük Notları & Hedef Değerlendirmesi</h3>
+            <textarea id="dayNotes" placeholder="Bugün nasıl geçti Selen? Yarın için ilk hedefin ne?"></textarea>
+        </div>
+
+        <button class="save-btn" onclick="saveData()">🌸 Günün İlerlemesini & Notlarını Kaydet</button>
+    </div>
+
+    <!-- SEKME 2: AKILLI GÜNLÜK VİZ -->
+    <div id="tab-quiz" class="tab-content">
+        <div class="panel-box">
+            <h3>🧠 Akıllı Günlük Viz</h3>
+            <p style="font-size: 12px; opacity: 0.8; margin-bottom: 12px;" id="quizSubtitle">Mini viz sınavı:</p>
+            <div class="quiz-card" id="quizCardContainer"></div>
+            <div style="text-align: right; margin-top: 10px; font-size: 12px; font-weight: bold; color: var(--primary-green);">
+                Doğru Çözülen Toplam Viz Sorusu: <span id="quizScoreCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKME 3: HIZLI KARTLAR -->
+    <div id="tab-flashcards" class="tab-content">
+        <div class="panel-box">
+            <h3>📇 YKS & Tıp Bilgi Flashcardları</h3>
+            <div class="flashcard-box" onclick="flipFlashcard()">
+                <div class="flashcard-content" id="flashcardText">Kart yükleniyor...</div>
+                <div class="flashcard-sub">Cevabı görmek için karta dokun 👆</div>
+            </div>
+            <button class="save-btn" onclick="nextFlashcard()" style="padding:10px; font-size:14px;">Sonraki Kart ➡️</button>
+        </div>
+    </div>
+
+    <!-- SEKME 4: NETLER -->
+    <div id="tab-netler" class="tab-content">
+        <div class="panel-box">
+            <h3>📊 TYT - AYT Net Girişi & Çapa Tıp Simülasyonu</h3>
+            <div class="net-grid">
+                <div class="net-input-group">TYT Türkçe: <input type="number" id="netTytTurkce" step="0.25"></div>
+                <div class="net-input-group">TYT Sosyal: <input type="number" id="netTytSosyal" step="0.25"></div>
+                <div class="net-input-group">TYT Mat: <input type="number" id="netTytMat" step="0.25"></div>
+                <div class="net-input-group">TYT Fen: <input type="number" id="netTytFen" step="0.25"></div>
+                <div class="net-input-group">AYT Mat: <input type="number" id="netAytMat" step="0.25"></div>
+                <div class="net-input-group">AYT Fizik-Kim-Bio: <input type="number" id="netAytFen" step="0.25"></div>
+            </div>
+            <button class="save-btn" onclick="saveAndCalculateSimulation()" style="margin-top:10px; padding:12px; font-size:14px;">Denemeyi Kaydet & Simülasyonu Çalıştır</button>
+        </div>
+        <div class="panel-box">
+            <h3>📈 Deneme Trend Geçmişi</h3>
+            <div id="denemeHistoryContainer" style="font-size: 13px; line-height: 1.6;">Henüz kaydedilmiş deneme verisi bulunmuyor.</div>
+        </div>
+        <div class="panel-box" id="simResultBox" style="background: var(--card-bg); border: 2px solid var(--primary-green); display:none;">
+            <h3>🎯 Simülasyon Sonucu</h3>
+            <div id="simOutput" style="font-size: 14px; line-height: 1.6;"></div>
+        </div>
+    </div>
+
+    <!-- SEKME 5: KANTİN -->
+    <div id="tab-kantin" class="tab-content">
+        <div class="panel-box">
+            <h3>☕ Kampüs Kantini Sürpriz Mola Çarkı</h3>
+            <div class="wheel-box">
+                <div style="font-size: 40px; margin-bottom: 10px;">🎡</div>
+                <button class="save-btn" onclick="spinWheel()" style="margin-top:0; padding:10px; font-size:14px;">Mola Çarkını Çevir!</button>
+                <div class="wheel-result" id="wheelResultText">Çarkı çevirmek için butona tıkla! ☕</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKME 6: ANATOMİ -->
+    <div id="tab-anatomi" class="tab-content">
+        <div class="panel-box">
+            <h3>🦴 Selen'in İskelet & Fizyoloji Koleksiyonu</h3>
+            <div class="bones-grid" id="bonesContainer"></div>
+        </div>
+    </div>
+
+    <!-- SEKME 7: İSTATİSTİK -->
+    <div id="tab-istatistik" class="tab-content">
+        <div class="panel-box">
+            <h3>📈 Selen'in Kamp Performans Paneli</h3>
+            <div style="font-size: 14px; line-height: 1.8; margin-top: 10px;">
+                <p>🍅 **Toplam Tamamlanan Odaklanma:** <span id="statPomoCount" style="color:var(--primary-green); font-weight:bold;">0</span> Seans</p>
+                <p>🧠 **Çözülen Quiz Sorusu:** <span id="statQuizCount" style="color:var(--accent-gold); font-weight:bold;">0</span> Adet</p>
+                <p>💧 **Toplam İçilen Su (Tüm Zamanlar):** <span id="statTotalWaterCount" style="color:#0288d1; font-weight:bold;">0.00</span> Litre</p>
+                <p>🦴 **Kazanılan Anatomi Parçası:** <span id="statBoneCount" style="color:var(--accent-gold); font-weight:bold;">0</span> Adet</p>
+                <p>🩺 **Hastane Kariyer Unvanı:** <span id="statRankText" style="color:var(--primary-green); font-weight:bold;">Stajyer Doktor</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKME 8: ROZETLER -->
+    <div id="tab-rozetler" class="tab-content">
+        <div class="panel-box">
+            <h3>🏆 Çapa Tıp Derece Rozeti Koleksiyonu</h3>
+            <div class="badges-grid" id="badgesGridContainer"></div>
+        </div>
+    </div>
+
+    <!-- SEKME 9: YANLIŞLAR -->
+    <div id="tab-yanlislar" class="tab-content">
+        <div class="panel-box">
+            <h3>⚠️ Kritik Yanlışlar & Soru Notları Defteri</h3>
+            <div style="margin-bottom: 8px;"><input type="text" id="yanlisDers" placeholder="Ders / Konu"></div>
+            <div style="margin-bottom: 8px;"><textarea id="yanlisSoruNotu" placeholder="Sorunun püf noktası veya formül..."></textarea></div>
+            <button class="save-btn" onclick="saveYanlisRecord()" style="margin-top:5px; padding:10px; font-size:14px;">Deftere Ekle</button>
+        </div>
+        <div class="panel-box">
+            <h3>📖 Soru Günlüğü Arşivi</h3>
+            <div id="yanlisListContainer" style="font-size: 13px;">Defterin boş, harika gidiyorsun!</div>
+        </div>
+    </div>
+</div>
+
+<audio id="audio-rain" loop src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg"></audio>
+<audio id="audio-cafe" loop src="https://actions.google.com/sounds/v1/environments/coffee_shop.ogg"></audio>
+<audio id="audio-lofi" loop src="https://actions.google.com/sounds/v1/ambiences/outdoor_projector_hum.ogg"></audio>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        if(body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('yks_theme', 'dark');
+        } else {
+            body.setAttribute('data-theme', 'light');
+            localStorage.setItem('yks_theme', 'light');
+        }
+    }
+    if(localStorage.getItem('yks_theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+
+    // ATATÜRK'ÜN SÖZLERİ (Güne göre değişir)
+    const ataturkQuotes = [
+        "\"Hayatta en hakiki mürşit ilimdir, fendir.\" - Mustafa Kemal Atatürk",
+        "\"Çalışmak demek, boş durmak demek değildir. Günün saatlerince çalışmak, yorulmak ve yine çalışmak demektir.\" - Mustafa Kemal Atatürk",
+        "\"Eğitimdir ki bir milleti ya özgür, bağımsız, şanlı, yüksek bir topluluk halinde yaşatır; ya da milleti esaret ve sefalete terk eder.\" - Mustafa Kemal Atatürk",
+        "\"Benim manevi mirasım ilim ve akıldır.\" - Mustafa Kemal Atatürk",
+        "\"Vatanını en çok seven, görevini en iyi yapandır.\" - Mustafa Kemal Atatürk",
+        "\"Yorulmadan beni takip etmek kararında olanlar asla yorulmazlar.\" - Mustafa Kemal Atatürk",
+        "\"Muallimler! Yeni nesil sizin eseriniz olacaktır.\" - Mustafa Kemal Atatürk"
+    ];
+
+    function setDailyAtaturkQuote() {
+        const today = new Date();
+        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        const quoteIndex = dayOfYear % ataturkQuotes.length;
+        document.getElementById('dailyQuote').innerText = ataturkQuotes[quoteIndex];
+    }
+    setDailyAtaturkQuote();
+
+    function updateCountdowns() {
+        const now = new Date();
+        const tytDate = new Date(now.getFullYear(), 5, 20, 10, 0, 0); 
+        if(now > tytDate) tytDate.setFullYear(tytDate.getFullYear() + 1);
+        const aytDate = new Date(tytDate.getTime());
+        aytDate.setDate(aytDate.getDate() + 1);
+
+        const diffTyt = tytDate - now;
+        const daysTyt = Math.ceil(diffTyt / (1000 * 60 * 60 * 24));
+        const diffAyt = aytDate - now;
+        const daysAyt = Math.ceil(diffAyt / (1000 * 60 * 60 * 24));
+
+        document.getElementById('tytCountdown').innerText = `⏳ TYT'ye Kalan: ${daysTyt} Gün`;
+        document.getElementById('aytCountdown').innerText = `⏳ AYT'ye Kalan: ${daysAyt} Gün`;
+    }
+    updateCountdowns();
+
+    let currentActiveSound = null;
+    function toggleSound(type) {
+        const audio = document.getElementById(`audio-${type}`);
+        const btn = document.getElementById(`btn-${type}`);
+        
+        if (currentActiveSound && currentActiveSound !== type) {
+            document.getElementById(`audio-${currentActiveSound}`).pause();
+            document.getElementById(`btn-${currentActiveSound}`).classList.remove('active');
+        }
+
+        if (audio.paused) {
+            audio.play().catch(e => console.log("Ses çalma izni engellendi"));
+            btn.classList.add('active');
+            currentActiveSound = type;
+        } else {
+            audio.pause();
+            btn.classList.remove('active');
+            currentActiveSound = null;
+        }
+    }
+
+    let waterAmount = parseFloat(localStorage.getItem('yks_water') || '0.0');
+    let totalAllTimeWater = parseFloat(localStorage.getItem('yks_total_all_water') || '0.0');
+
+    let todayStr = new Date().toLocaleDateString();
+    let lastWaterDate = localStorage.getItem('yks_water_date');
+    if(lastWaterDate !== todayStr) {
+        waterAmount = 0.0;
+        localStorage.setItem('yks_water', '0.0');
+        localStorage.setItem('yks_water_date', todayStr);
+    }
+
+    document.getElementById('waterCount').innerText = waterAmount.toFixed(2);
+
+    function addWater() {
+        waterAmount += 0.25;
+        if(waterAmount > 4.0) waterAmount = 4.0;
+        totalAllTimeWater += 0.25;
+
+        document.getElementById('waterCount').innerText = waterAmount.toFixed(2);
+        localStorage.setItem('yks_water', waterAmount);
+        localStorage.setItem('yks_total_all_water', totalAllTimeWater);
+        checkBadges();
+        updateStats();
+    }
+
+    function resetDailyWater() {
+        if(waterAmount > 0) {
+            totalAllTimeWater = Math.max(0, totalAllTimeWater - waterAmount);
+            waterAmount = 0.0;
+            document.getElementById('waterCount').innerText = waterAmount.toFixed(2);
+            localStorage.setItem('yks_water', waterAmount);
+            localStorage.setItem('yks_total_all_water', totalAllTimeWater);
+            updateStats();
+            alert("💧 Günlük su sayacı sıfırlandı!");
+        }
+    }
+
+    function setEnergy(type) {
+        document.querySelectorAll('.energy-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        let msg = "";
+        if(type === 'roket') msg = "🚀 Harika! ÖSYM Uz ile tam gaz Çapa Tıp'a!";
+        if(type === 'yorgun') msg = "☕ Tempoyu dengede tutalım Selen, azimle devam!";
+        if(type === 'dinlenme') msg = "🌧️ Dinlenmek de sürecin parçası, yarın daha güçlü!";
+        document.getElementById('energyMessage').innerText = msg;
+        localStorage.setItem('yks_energy', type);
+    }
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        event.currentTarget.classList.add('active');
+        if(tabName === 'rozetler') renderBadges();
+        if(tabName === 'anatomi') renderBones();
+        if(tabName === 'istatistik') updateStats();
+        if(tabName === 'quiz') loadQuizQuestion();
+        if(tabName === 'flashcards') loadFlashcard();
+        if(tabName === 'netler') loadDenemeHistory();
+    }
+
+    function updateHospitalRank() {
+        let hours = parseInt(localStorage.getItem('yks_total_sec') || '0') / 3600;
+        let rank = "Stajyer Doktor (1. Seviye)";
+        if(hours >= 50) rank = "Asistan Doktor 🩺";
+        if(hours >= 100) rank = "Cerrah 🔪";
+        if(hours >= 200) rank = "Prof. Dr. Çapa Başhekimi 👑";
+        document.getElementById('hospitalRankTitle').innerText = rank;
+        let statRank = document.getElementById('statRankText');
+        if(statRank) statRank.innerText = rank;
+    }
+
+    const wheelPhrases = [
+        "☕ Kantin Molası: 'ÖSYM Uz ile ilişkimiz tazelendi, vektörleri kafaya takma!'",
+        "☕ Kantin Molası: 'Görkem Şahin organik kimya bileşikleri gibi enerjini yükselt!'",
+        "☕ Kantin Molası: 'Dr. Biyoloji sinir sistemi impuls iletimi gibi hızlıca dinlen ve dön!'",
+        "☕ Kantin Molası: 'Çapa Tıp amfisinde ilk dersin hayaliyle derin bir nefes al.'",
+        "☕ Kantin Molası: 'Glukoz seviyen düştüyse hafif bir atıştırmalık şart!'"
+    ];
+    function spinWheel() {
+        let result = wheelPhrases[Math.floor(Math.random() * wheelPhrases.length)];
+        document.getElementById('wheelResultText').innerText = result;
+    }
+
+    const vakaDatabase = [
+        { title: "Klinik Vaka #1: Miyokard İnfarktüsü (Kalp Krizi)", desc: "Acile göğüs ağrısı ve sol kola yaran ağrıyla gelen 55 yaşındaki hastada EKG'de ST yükselmesi görülüyor. Temel fizyoloji temeli: Koroner arterlerin tıkanması sonucu miyokard dokusunun oksijensiz kalarak nekroza uğraması." },
+        { title: "Klinik Vaka #2: Ozmotik Denge & Dehidrasyon", desc: "Günlerce su içmeden uzun süre kamp çalışması yapan bir öğrencide ADH (Antidiüretik Hormon) salınımı maksimuma çıkar. Böbrekler suyu tutarak idrarı koyulaştırır." },
+        { title: "Klinik Vaka #3: Sinapsis & Nörotransmitter İletimi", desc: "Dr. Biyoloji notlarıyla tekrar edilen hızlı reflekslerin temelinde asetilkolin gibi nörotransmitterlerin sinaptik boşluktan geçişi yatar." }
+    ];
+
+    function loadDailyVaka(dayNum) {
+        let vaka = vakaDatabase[(dayNum - 1) % vakaDatabase.length];
+        document.getElementById('vakaTitle').innerText = `🧬 ${vaka.title}`;
+        document.getElementById('vakaDesc').innerText = vaka.desc;
+    }
+
+    const flashcardData = [
+        { q: "Soru: Özcan Aykın anlatımıyla Bağıl Hareket ve Vektörlerde bileşke nasıl bulunur?", a: "Cevap: Uca ekleme yöntemi veya paralelkenar metodu ile." },
+        { q: "Soru: Görkem Şahin organik kimya müfredatında Alkanların genel formülü nedir?", a: "Cevap: CnH2n+2." },
+        { q: "Soru: Dr. Biyoloji anlatımıyla Nöronlarda impuls iletim hızı neye bağlıdır?", a: "Cevap: Miyelin kılıf varlığına, akson çapına ve Ranvier boğum sayısına." },
+        { q: "Soru: Coğrafyanın Kodları ile İzohips haritalarında eğim nerede fazladır?", a: "Cevap: İzohips eğrilerinin birbirine en çok yaklaştığı yerlerde." }
+    ];
+    let currentCardIdx = 0, isCardFlipped = false;
+
+    function loadFlashcard() {
+        isCardFlipped = false;
+        document.getElementById('flashcardText').innerText = flashcardData[currentCardIdx].q;
+    }
+    function flipFlashcard() {
+        isCardFlipped = !isCardFlipped;
+        if(isCardFlipped) {
+            document.getElementById('flashcardText').innerText = flashcardData[currentCardIdx].a;
+            document.getElementById('flashcardText').style.color = 'var(--accent-gold)';
+        } else {
+            document.getElementById('flashcardText').innerText = flashcardData[currentCardIdx].q;
+            document.getElementById('flashcardText').style.color = 'var(--primary-green)';
+        }
+    }
+    function nextFlashcard() {
+        currentCardIdx = (currentCardIdx + 1) % flashcardData.length;
+        loadFlashcard();
+    }
+
+    function getRoutineBookNames(dayNum) {
+        let paragrafKitap = (dayNum % 2 !== 0) ? "Süre Yayınları" : "Apotemi";
+        let problemKitap = (dayNum % 2 !== 0) ? "Apotemi" : "Barış Yayınları";
+        let geoMod = (dayNum - 1) % 4;
+        let geoKitap = "3D TYT Geometri";
+        if(geoMod === 1) geoKitap = "TYT Orijinal Geometri";
+        if(geoMod === 2) geoKitap = "3D AYT Geometri";
+        if(geoMod === 3) geoKitap = "Eyüp B. Geometri";
+
+        return { paragrafKitap, problemKitap, geoKitap };
+    }
+
+    function getTasksForDay(dayNum) {
+        let books = getRoutineBookNames(dayNum);
+        document.getElementById('labelParagrafKitap').innerText = `📖 Paragraf (${books.paragrafKitap})`;
+        document.getElementById('labelProblemKitap').innerText = `🧮 Problemler (${books.problemKitap})`;
+        document.getElementById('labelGeoKitap').innerText = `📐 Geometri (${books.geoKitap})`;
+
+        if(dayNum === 1) {
+            return [
+                { text: "AYT Matematik: Polinomlar Konu Anlatımı (Mert Hoca / Eyüp B.) + Orijinal AYT Mat SB (Polinomlar - Test 1, 2, 3)", link: "https://www.youtube.com/results?search_query=mert+hoca+polinomlar" },
+                { text: "TYT Fizik: Fizik Bilimine Giriş & Madde ve Özellikleri + 345 TYT Fizik SB (2 Test) & 3D TYT Fizik SB (2 Test)", link: "https://www.youtube.com/results?search_query=ozcan+aykin+fizik+bilimine_giris" },
+                { text: "AYT Kimya: Modern Atom Teorisi + MSB AYT Kimya (Test 1, 2)", link: "https://www.youtube.com/results?search_query=gorkem+sahin+modern+atom_teorisi" },
+                { text: "TYT Tarih: İlk ve Orta Çağlarda Türk Dünyası (Kavram / Özet Okuma)", link: "https://www.youtube.com/results?search_query=mehmet+celal+hoca+tarih" }
+            ];
+        } else if(dayNum === 2) {
+            return [
+                { text: "AYT Matematik: Polinomlar Derece & Bölme + Orijinal AYT Mat SB (Polinomlar - Test 4, 5, 6)", link: "https://www.youtube.com/results?search_query=eyup+b+polinomlar" },
+                { text: "TYT Coğrafya: Coğrafyanın Kodları: Harita Bilgisi & İzohipsler (1 Video + Çizim) + Coğrafya SB (1-2 Test)", link: "https://www.youtube.com/results?search_query=cografyanin+kodlari+harita_bilgisi" },
+                { text: "Dil Bilgisi: 345 Dil Bilgisi (2 Test)", link: "" },
+                { text: "AYT Biyoloji: Nöron Yapısı ve İmpuls İletimi + Biyotik AYT Biyo (Test 1, 2) & 345 AYT Biyo (Test 1)", link: "https://www.youtube.com/results?search_query=dr+biyoloji+norun_yapisi" }
+            ];
+        } else if(dayNum === 3) {
+            return [
+                { text: "AYT Matematik: Polinomlar Katsayılar & Kalan Bulma + Orijinal AYT Mat SB (Polinomlar - Test 7, 8)", link: "https://www.youtube.com/results?search_query=mert+hoca+polinomlar" },
+                { text: "TYT Fen Eritme: MSB TYT Kimya (2 Test) + 3D TYT Kimya (2 Test)", link: "https://www.youtube.com/results?search_query=gorkem+sahin+kimya" },
+                { text: "AYT Fizik: Vektörler & Bağıl Hareket + MSB AYT Fizik (Test 1, 2) & Bilgi Sarmal (Test 1, 2)", link: "https://www.youtube.com/results?search_query=ozcan+aykin+vektorler" }
+            ];
+        } else {
+            return [
+                { text: `AYT Matematik & Soru Bankası Çalışması (Gün ${dayNum} Programı)`, link: "https://www.youtube.com/results?search_query=mert+hoca+ayt+matematik" },
+                { text: `TYT/AYT Fen & Sosyal Branş Tarama Çalışması`, link: "https://www.youtube.com/results?search_query=ozcan+aykin+fizik" },
+                { text: `Fasikül Tekrarı ve Eksik Kapanışları`, link: "https://www.youtube.com/results?search_query=dr+biyoloji+ayt" }
+            ];
+        }
+    }
+
+    function getDailyQuizData(dayNum) {
+        return {
+            subject: `Gün ${dayNum} - YKS Kapsamlı Soru Vizleri`,
+            q: "Özcan Aykın Fizik, Görkem Şahin Kimya ve Dr. Biyoloji kampına göre, bugün işlenen konuların pekiştirilmesi için en etkili kaynak tarama yöntemi hangisidir?",
+            options: [
+                "Konu ardından Süre / Apotemi Paragraf ve 3D / Orijinal / Barış problem/geometri fasikülleriyle zirveye oynamak.",
+                "Sadece video izleyip soru çözmemek.",
+                "Rutinleri atlayıp sadece deneme çözmek.",
+                "Hiçbir kaynak çözmeden ezber yapmak."
+            ],
+            correctIdx: 0,
+            explanation: "Doğru! Düzenli paragraf, problem, PKOB ve geometri rutinleri Çapa Tıp netlerini direkt uçurur."
+        };
+    }
+
+    // 26 EYLÜL 2026 CUMARTESİ BAŞLANGIÇ TARİHİNE GÖRE TAKVİM OLUŞTURMA
+    const startDate = new Date(2026, 8, 26); // Ay indeksi 8 = Eylül
+    const daySelect = document.getElementById('daySelect');
+    
+    for(let i = 1; i <= 84; i++) {
+        let currentDate = new Date(startDate.getTime());
+        currentDate.setDate(startDate.getDate() + (i - 1));
+        
+        let dateStr = currentDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' });
+        let opt = document.createElement('option');
+        opt.value = i;
+        opt.innerText = `${i}. Gün (${dateStr}) - Hafta ${Math.ceil(i/7)}`;
+        daySelect.appendChild(opt);
+    }
+
+    let currentDay = parseInt(localStorage.getItem('yks_current_day') || '1');
+    daySelect.value = currentDay;
+
+    function onDayChange() {
+        currentDay = parseInt(daySelect.value);
+        localStorage.setItem('yks_current_day', currentDay);
+        loadDayData(currentDay);
+    }
+
+    function loadDayData(dayNum) {
+        loadDailyVaka(dayNum);
+        let tasks = getTasksForDay(dayNum);
+        let taskListEl = document.getElementById('taskList');
+        taskListEl.innerHTML = '';
+
+        let savedTasks = JSON.parse(localStorage.getItem(`yks_tasks_${dayNum}`) || '[]');
+        tasks.forEach((t, idx) => {
+            let isChecked = savedTasks[idx] ? savedTasks[idx].checked : false;
+            let noteVal = (savedTasks[idx] && savedTasks[idx].note) ? savedTasks[idx].note : '';
+            let soruVal = (savedTasks[idx] && savedTasks[idx].soru) ? savedTasks[idx].soru : '';
+
+            let li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = `
+                <div class="task-main-row">
+                    <div class="task-left">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="updateProgress(); calculateTotalSoru();">
+                        <span class="task-text">${t.text}</span>
+                    </div>
+                    ${t.link ? `<a href="${t.link}" target="_blank" class="video-link">📺 Video Çözüm / Konu</a>` : ''}
+                </div>
+                <div class="task-sub-row">
+                    <input type="number" placeholder="Soru Sayısı" value="${soruVal}" oninput="updateProgress(); calculateTotalSoru();">
+                    <textarea placeholder="Bu ders için notun / yanlış anladığın yer..." oninput="autoSaveTaskNotes()">${noteVal}</textarea>
+                </div>
+            `;
+            taskListEl.appendChild(li);
+        });
+
+        let savedRoutines = JSON.parse(localStorage.getItem(`yks_routines_${dayNum}`) || '{"p":false,"pr":false,"pk":false,"g":false,"ps":"","prs":"","pks":"","gs":""}');
+        document.getElementById('rutin_paragraf').checked = savedRoutines.p;
+        document.getElementById('rutin_problem').checked = savedRoutines.pr;
+        document.getElementById('rutin_pkob').checked = savedRoutines.pk;
+        document.getElementById('rutin_geometri').checked = savedRoutines.g;
+
+        document.getElementById('rutin_paragraf_soru').value = savedRoutines.ps !== undefined ? savedRoutines.ps : '';
+        document.getElementById('rutin_problem_soru').value = savedRoutines.prs !== undefined ? savedRoutines.prs : '';
+        document.getElementById('rutin_pkob_soru').value = savedRoutines.pks !== undefined ? savedRoutines.pks : '';
+        document.getElementById('rutin_geometri_soru').value = savedRoutines.gs !== undefined ? savedRoutines.gs : '';
+
+        updateRoutineProgress();
+
+        let savedMicro = JSON.parse(localStorage.getItem(`yks_micro_${dayNum}`) || '[{"c":false,"t":""},{"c":false,"t":""},{"c":false,"t":""}]');
+        for(let i=0; i<3; i++) {
+            document.getElementById(`micro_${i}`).checked = savedMicro[i].c;
+            document.getElementById(`micro_text_${i}`).value = savedMicro[i].t;
+        }
+
+        document.getElementById('dayNotes').value = localStorage.getItem(`yks_notes_${dayNum}`) || '';
+
+        updateProgress();
+        calculateTotalSoru();
+    }
+
+    function updateRoutineProgress() {
+        let count = 0;
+        if(document.getElementById('rutin_paragraf').checked) count++;
+        if(document.getElementById('rutin_problem').checked) count++;
+        if(document.getElementById('rutin_pkob').checked) count++;
+        if(document.getElementById('rutin_geometri').checked) count++;
+
+        document.getElementById('routineCountBadge').innerText = `${count} / 4 Tamam`;
+        calculateTotalSoru();
+    }
+
+    function calculateTotalSoru() {
+        let pSoru = parseInt(document.getElementById('rutin_paragraf_soru').value) || 0;
+        let prSoru = parseInt(document.getElementById('rutin_problem_soru').value) || 0;
+        let pkSoru = parseInt(document.getElementById('rutin_pkob_soru').value) || 0;
+        let gSoru = parseInt(document.getElementById('rutin_geometri_soru').value) || 0;
+
+        let taskSoru = 0;
+        document.querySelectorAll('.task-sub-row input[type="number"]').forEach(inp => {
+            taskSoru += parseInt(inp.value) || 0;
+        });
+
+        let total = pSoru + prSoru + pkSoru + gSoru + taskSoru;
+        document.getElementById('toplamGunlukSoru').innerText = total;
+    }
+
+    function updateProgress() {
+        let items = document.querySelectorAll('#taskList .task-item');
+        let checkedCount = 0;
+        items.forEach(item => {
+            if(item.querySelector('input[type="checkbox"]').checked) checkedCount++;
+        });
+
+        let percent = items.length > 0 ? Math.round((checkedCount / items.length) * 100) : 0;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Tamamlanan Ders: %${percent}`;
+
+        let gardenText = "Bahçe Durumu: Tohumlar Ekilmedi 🌱";
+        if(percent >= 30) gardenText = "Bahçe Durumu: Filizler Yeşeriyor 🌿";
+        if(percent >= 70) gardenText = "Bahçe Durumu: Çiçekler Açtı 🌷";
+        if(percent === 100) gardenText = "Bahçe Durumu: Harika Orman! 🌳✨";
+        document.getElementById('gardenStatus').innerText = gardenText;
+    }
+
+    function saveMicroGoals() {
+        let microData = [];
+        for(let i=0; i<3; i++) {
+            microData.push({
+                c: document.getElementById(`micro_${i}`).checked,
+                t: document.getElementById(`micro_text_${i}`).value
+            });
+        }
+        localStorage.setItem(`yks_micro_${currentDay}`, JSON.stringify(microData));
+    }
+
+    function autoSaveTaskNotes() {
+        let tasksData = [];
+        document.querySelectorAll('#taskList .task-item').forEach(item => {
+            tasksData.push({
+                checked: item.querySelector('input[type="checkbox"]').checked,
+                soru: item.querySelector('.task-sub-row input[type="number"]').value,
+                note: item.querySelector('.task-sub-row textarea').value
+            });
+        });
+        localStorage.setItem(`yks_tasks_${currentDay}`, JSON.stringify(tasksData));
+    }
+
+    function saveData() {
+        autoSaveTaskNotes();
+
+        let routineData = {
+            p: document.getElementById('rutin_paragraf').checked,
+            pr: document.getElementById('rutin_problem').checked,
+            pk: document.getElementById('rutin_pkob').checked,
+            g: document.getElementById('rutin_geometri').checked,
+            ps: document.getElementById('rutin_paragraf_soru').value,
+            prs: document.getElementById('rutin_problem_soru').value,
+            pks: document.getElementById('rutin_pkob_soru').value,
+            gs: document.getElementById('rutin_geometri_soru').value
+        };
+        localStorage.setItem(`yks_routines_${currentDay}`, JSON.stringify(routineData));
+
+        localStorage.setItem(`yks_notes_${currentDay}`, document.getElementById('dayNotes').value);
+
+        checkBadges();
+        alert("🌸 Günlük ilerlemen ve notların başarıyla kaydedildi, Çapa Tıp yolunda harikasın Selen!");
+    }
+
+    let timerSec = parseInt(localStorage.getItem('yks_timer_sec') || '0');
+    let timerInterval = null, isTimerRunning = false;
+
+    function formatTime(sec) {
+        let h = Math.floor(sec / 3600);
+        let m = Math.floor((sec % 3600) / 60);
+        let s = sec % 60;
+        return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function startTimer() {
+        if(!isTimerRunning) {
+            isTimerRunning = true;
+            timerInterval = setInterval(() => {
+                timerSec++;
+                document.getElementById('timerDisplay').innerText = formatTime(timerSec);
+                let mins = Math.floor(timerSec / 60);
+                document.getElementById('timerStatusMsg').innerText = `Günlük Çalışma: ${mins} dk`;
+                localStorage.setItem('yks_timer_sec', timerSec);
+
+                let totalSecAll = parseInt(localStorage.getItem('yks_total_sec') || '0') + 1;
+                localStorage.setItem('yks_total_sec', totalSecAll);
+                updateHospitalRank();
+
+                if(timerSec >= 25200) { 
+                    document.getElementById('boneRewardBox').style.display = 'block';
+                    unlockBone(0);
+                }
+            }, 1000);
+        }
+    }
+    function pauseTimer() {
+        isTimerRunning = false;
+        clearInterval(timerInterval);
+    }
+    function resetTimer() {
+        pauseTimer();
+        timerSec = 0;
+        document.getElementById('timerDisplay').innerText = formatTime(0);
+        document.getElementById('timerStatusMsg').innerText = `Günlük Çalışma: 0 dk`;
+        localStorage.setItem('yks_timer_sec', 0);
+    }
+    document.getElementById('timerDisplay').innerText = formatTime(timerSec);
+
+    let pomoSec = 3600, pomoInterval = null, isPomoRunning = false;
+    let completedPomos = parseInt(localStorage.getItem('yks_pomo_count') || '0');
+    document.getElementById('pomoSeries').innerText = `Tamamlanan Seriler: 🍅 (${completedPomos})`;
+
+    function formatPomo(sec) {
+        let m = Math.floor(sec / 60);
+        let s = sec % 60;
+        return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function startPomo() {
+        if(!isPomoRunning) {
+            isPomoRunning = true;
+            pomoInterval = setInterval(() => {
+                pomoSec--;
+                document.getElementById('pomoDisplay').innerText = formatPomo(pomoSec);
+                if(pomoSec <= 0) {
+                    clearInterval(pomoInterval);
+                    isPomoRunning = false;
+                    pomoSec = 3600;
+                    completedPomos++;
+                    localStorage.setItem('yks_pomo_count', completedPomos);
+                    document.getElementById('pomoSeries').innerText = `Tamamlanan Seriler: 🍅 (${completedPomos})`;
+                    document.getElementById('plantVisual').innerText = '🌳';
+                    document.getElementById('plantInfo').innerText = '1 Saatlik Odaklanma Başarıyla Tamamlandı! Bahçen büyüdü.';
+                    checkBadges();
+                    updateStats();
+                    alert("🍅 1 saatlik odaklanma seansı bitti! Harika iş çıkardın Selen.");
+                }
+            }, 1000);
+        }
+    }
+    function pausePomo() {
+        isPomoRunning = false;
+        clearInterval(pomoInterval);
+    }
+    function resetPomo() {
+        pausePomo();
+        pomoSec = 3600;
+        document.getElementById('pomoDisplay').innerText = formatPomo(3600);
+    }
+
+    let quizScore = parseInt(localStorage.getItem('yks_quiz_score') || '0');
+    document.getElementById('quizScoreCount').innerText = quizScore;
+
+    function loadQuizQuestion() {
+        let qData = getDailyQuizData(currentDay);
+        document.getElementById('quizSubtitle').innerText = qData.subject;
+        let container = document.getElementById('quizCardContainer');
+        
+        let html = `<div class="quiz-question">${qData.q}</div><div class="quiz-options">`;
+        qData.options.forEach((opt, idx) => {
+            html += `<button class="quiz-opt-btn" onclick="checkQuizAnswer(${idx}, ${qData.correctIdx}, this)">${opt}</button>`;
+        });
+        html += `</div><div class="quiz-feedback" id="quizFeedback">${qData.explanation}</div>`;
+        container.innerHTML = html;
+    }
+
+    function checkQuizAnswer(selectedIdx, correctIdx, btn) {
+        let buttons = document.querySelectorAll('.quiz-opt-btn');
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+        let feedback = document.getElementById('quizFeedback');
+        feedback.style.display = 'block';
+
+        if(selectedIdx === correctIdx) {
+            btn.classList.add('correct');
+            feedback.innerHTML = "🎉 Tebrikler! Doğru cevap. " + feedback.innerHTML;
+            quizScore++;
+            localStorage.setItem('yks_quiz_score', quizScore);
+            document.getElementById('quizScoreCount').innerText = quizScore;
+            checkBadges();
+            updateStats();
+        } else {
+            btn.classList.add('wrong');
+            buttons[correctIdx].classList.add('correct');
+            feedback.innerHTML = "❌ Yanlış cevap. Doğru olan yeşil renkle işaretlendi.";
+        }
+    }
+
+    function saveAndCalculateSimulation() {
+        let tTurkce = parseFloat(document.getElementById('netTytTurkce').value) || 0;
+        let tSosyal = parseFloat(document.getElementById('netTytSosyal').value) || 0;
+        let tMat = parseFloat(document.getElementById('netTytMat').value) || 0;
+        let tFen = parseFloat(document.getElementById('netTytFen').value) || 0;
+        let aMat = parseFloat(document.getElementById('netAytMat').value) || 0;
+        let aFen = parseFloat(document.getElementById('netAytFen').value) || 0;
+
+        let tytToplam = tTurkce + tSosyal + tMat + tFen;
+        let aytSayisal = aMat + aFen;
+
+        let history = JSON.parse(localStorage.getItem('yks_deneme_history') || '[]');
+        history.push({ date: new Date().toLocaleDateString(), tyt: tytToplam, ayt: aytSayisal });
+        localStorage.setItem('yks_deneme_history', JSON.stringify(history));
+        loadDenemeHistory();
+
+        let simBox = document.getElementById('simResultBox');
+        let simOut = document.getElementById('simOutput');
+        simBox.style.display = 'block';
+
+        let targetStatus = "Çapa Tıp hedefi için tempoyu biraz daha artırma vakti! Sen bu işin üstesinden gelirsin.";
+        if(tytToplam >= 95 && aytSayisal >= 70) {
+            targetStatus = "🏆 Harika! Bu netlerle Çapa Tıp kapısı ardına kadar açılıyor!";
+        } else if(tytToplam >= 80 && aytSayisal >= 55) {
+            targetStatus = "🚀 Çok iyi gidiyorsun, fasikül eksiklerini kapatarak Çapa'ya kilitlendin!";
+        }
+
+        simOut.innerHTML = `
+            <b>TYT Toplam Net:</b> ${tytToplam.toFixed(2)}<br>
+            <b>AYT Sayısal Toplam Net:</b> ${aytSayisal.toFixed(2)}<br>
+            <b>Çapa Tıp Analizi:</b> ${targetStatus}
+        `;
+    }
+
+    function loadDenemeHistory() {
+        let history = JSON.parse(localStorage.getItem('yks_deneme_history') || '[]');
+        let container = document.getElementById('denemeHistoryContainer');
+        if(history.length === 0) {
+            container.innerText = "Henüz kaydedilmiş deneme verisi bulunmuyor.";
+            return;
+        }
+        let html = "";
+        history.forEach((h, idx) => {
+            html += `Deneme #${idx+1} (${h.date}) ➔ TYT: ${h.tyt} Net | AYT: ${h.ayt} Net<br>`;
+        });
+        container.innerHTML = html;
+    }
+
+    const bonesData = [
+        { name: "Femur (Uyluk Kemiği)", desc: "Vücudun en uzun ve en sağlam kemiğidir. Çapa Tıp anatomisinin temelidir." },
+        { name: "Humerus (Pazu Kemiği)", desc: "Üst ekstremitenin en uzun kemiği." },
+        { name: "Kranial Kemikler (Kafatası)", desc: "Beyni koruyan yassı kemikler." },
+        { name: "Tibia & Fibula (Kaval & Kemiği)", desc: "Alt ekstremite denge ve taşıma kemikleri." }
+    ];
+
+    function unlockBone(idx) {
+        let unlocked = JSON.parse(localStorage.getItem('yks_unlocked_bones') || '[true, false, false, false]');
+        unlocked[idx] = true;
+        localStorage.setItem('yks_unlocked_bones', JSON.stringify(unlocked));
+    }
+
+    function renderBones() {
+        let unlocked = JSON.parse(localStorage.getItem('yks_unlocked_bones') || '[true, false, false, false]');
+        let container = document.getElementById('bonesContainer');
+        let html = "";
+        bonesData.forEach((b, idx) => {
+            let isUnl = unlocked[idx];
+            html += `
+                <div class="bone-card ${isUnl ? 'unlocked' : ''}">
+                    <div style="font-weight:bold; color:var(--primary-green);">${isUnl ? '🦴 ' + b.name : '🔒 Kilitli Anatomi Parçası'}</div>
+                    <div style="font-size:11px; margin-top:4px; opacity:0.85;">${isUnl ? b.desc : '7 Saat çalışma barajını aşarak bu kemik kilidini aç.'}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    const badgesData = [
+        { id: 'b_water', title: 'Su Pınarı', desc: 'Toplam 5 Litre su tüket.' },
+        { id: 'b_pomo', title: 'Pomodoro Üstadı', desc: 'Toplam 5 seans odaklanma bitir.' },
+        { id: 'b_quiz', title: 'Viz Kurdu', desc: '5 adet doğru quiz çöz.' },
+        { id: 'b_surgeon', title: 'Çapa Cerrahı', desc: '100 saat çalışma süresine ulaş.' }
+    ];
+
+    function checkBadges() {
+        let unlockedBadges = JSON.parse(localStorage.getItem('yks_badges') || '{}');
+        if(totalAllTimeWater >= 5.0) unlockedBadges['b_water'] = true;
+        if(completedPomos >= 5) unlockedBadges['b_pomo'] = true;
+        if(quizScore >= 5) unlockedBadges['b_quiz'] = true;
+        if(parseInt(localStorage.getItem('yks_total_sec') || '0') >= 360000) unlockedBadges['b_surgeon'] = true;
+        localStorage.setItem('yks_badges', JSON.stringify(unlockedBadges));
+    }
+
+    function renderBadges() {
+        checkBadges();
+        let unlockedBadges = JSON.parse(localStorage.getItem('yks_badges') || '{}');
+        let container = document.getElementById('badgesGridContainer');
+        let html = "";
+        badgesData.forEach(b => {
+            let isUnl = unlockedBadges[b.id];
+            html += `
+                <div class="badge-card ${isUnl ? 'unlocked' : ''}">
+                    <div class="badge-icon">${isUnl ? '🏆' : '🔒'}</div>
+                    <div class="badge-title">${b.title}</div>
+                    <div class="badge-desc">${b.desc}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function updateStats() {
+        document.getElementById('statPomoCount').innerText = completedPomos;
+        document.getElementById('statQuizCount').innerText = quizScore;
+        document.getElementById('statTotalWaterCount').innerText = totalAllTimeWater.toFixed(2);
+        
+        let unlocked = JSON.parse(localStorage.getItem('yks_unlocked_bones') || '[true, false, false, false]');
+        let boneCount = unlocked.filter(Boolean).length;
+        document.getElementById('statBoneCount').innerText = boneCount;
+        updateHospitalRank();
+    }
+
+    function saveYanlisRecord() {
+        let ders = document.getElementById('yanlisDers').value;
+        let notu = document.getElementById('yanlisSoruNotu').value;
+        if(!ders || !notu) {
+            alert("Lütfen ders/konu ve soru notunu doldur.");
+            return;
+        }
+        let list = JSON.parse(localStorage.getItem('yks_yanlis_list') || '[]');
+        list.push({ ders, notu, date: new Date().toLocaleDateString() });
+        localStorage.setItem('yks_yanlis_list', JSON.stringify(list));
+        document.getElementById('yanlisDers').value = '';
+        document.getElementById('yanlisSoruNotu').value = '';
+        loadYanlisList();
+        alert("⚠️ Soru notu deftere eklendi!");
+    }
+
+    function loadYanlisList() {
+        let list = JSON.parse(localStorage.getItem('yks_yanlis_list') || '[]');
+        let container = document.getElementById('yanlisListContainer');
+        if(list.length === 0) {
+            container.innerText = "Defterin boş, harika gidiyorsun!";
+            return;
+        }
+        let html = "";
+        list.forEach((item, idx) => {
+            html += `
+                <div style="background:var(--card-bg); padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-color);">
+                    <b>#${idx+1} [${item.ders}]</b> (${item.date})<br>
+                    ${item.notu}
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    loadDayData(currentDay);
+    loadYanlisList();
+    updateHospitalRank();
+</script>
+</body>
+</html>
